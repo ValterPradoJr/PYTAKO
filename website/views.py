@@ -98,7 +98,7 @@ def perfil():
         
         if foto_perfil:
             if allowed_file(foto_perfil.filename):
-                upload_folder = 'BolaoSite/website/static/users/'+str(user.id)+'/'
+                upload_folder = 'website/static/users/'+str(user.id)+'/'
                 
                 if not os.path.exists(upload_folder):
                     os.makedirs(upload_folder)
