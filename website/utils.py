@@ -1,6 +1,7 @@
 import json
 
 def calcular_resultado(tabela_atual, apostas, usuarios):
+    print (tabela_atual, apostas,usuarios)
     if not apostas:
         return
     bolao = Bolao()
