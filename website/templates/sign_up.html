@@ -1,0 +1,117 @@
+{% extends "base.html" %} 
+{% block title %}
+    Cadastro
+{% endblock %} 
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Importa a biblioteca Font Awesome -->
+
+<style>
+    body {
+        background-image: url('/static/imagens/maraca.jpeg'); /* Imagem de fundo */
+        background-size: cover; 
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat; /* Impede a repetição da imagem */
+    }
+    .signup-container {
+        background-color: rgba(255, 255, 255, 0.8); /* Adiciona um fundo branco transparente ao formulário */
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 50px; /* Ajusta o espaçamento superior */
+        max-width: 400px; /* Define a largura máxima do contêiner */
+        margin-left: auto; /* Centraliza horizontalmente */
+        margin-right: auto; /* Centraliza horizontalmente */
+        text-align: center; /* Centraliza o conteúdo */
+    }
+    .signup-container input[type="date"] {
+        padding: 6px 12px; /* Adiciona preenchimento ao campo de data */
+    }
+    .signup-container .form-group {
+        margin-bottom: 20px; /* Adiciona espaçamento inferior entre os grupos de formulário */
+    }
+    .signup-container button {
+        display: block;
+        margin: 0 auto; /* Centraliza horizontalmente */
+        padding: 10px 20px; /* Adiciona preenchimento ao botão */
+        background-color: #006300; /* Cor de fundo do botão */
+        color: #fff; /* Cor do texto do botão */
+        border: none; /* Remove a borda */
+        border-radius: 5px; /* Adiciona bordas arredondadas */
+        cursor: pointer; /* Muda o cursor ao passar por cima */
+        transition: background-color 0.3s ease; /* Adiciona transição suave para a mudança de cor de fundo */
+        font-weight: bold; /* Torna o texto do botão em negrito */
+    }
+    .signup-container button:hover {
+        background-color: #034b03; /* Altera a cor de fundo quando o cursor está sobre o botão */
+    }
+</style>
+
+<div class="signup-container">
+    <form method="POST">
+        <h3 align="center">Criar conta</h3>
+        <div class="form-group">
+            <label for="email">Dados</label>
+            <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="Insira seu email"
+            />
+        </div>
+        <div class="form-group">
+            <!--<label for="nome_completo">Nome Completo</label>-->
+            <input
+                type="text"
+                class="form-control"
+                id="nome_completo"
+                name="nome_completo"
+                placeholder="Insira seu nome completo"
+            />
+        </div>
+        <!--<div class="form-group">
+            <label for="data_inicioti">Data de Início na TI</label>
+            <input
+                required="true"
+                type="date"
+                class="form-control"
+                id="data_inicioti"
+                name="data_inicioti"
+            />
+        </div>-->
+        <div class="form-group">
+            <!--<label for="password1">CPF (Somente números)</label>-->
+            <input
+                type="password"
+                class="form-control"
+                id="cpf"
+                name="cpf"
+                placeholder="Insira seu CPF"
+            />
+            <small id="emailHelp" class="form-text text-muted">Todos as senhas e números de CPF são encriptados ao armazenar, seus dados estão seguros conosco.</small>
+        </div>
+        <div class="form-group">
+            <label for="password1">Senha</label>
+            <input
+                type="password"
+                class="form-control"
+                id="password1"
+                name="password1"
+                placeholder="Insira uma senha"
+            />
+        </div>
+        <div class="form-group">
+            <!--<label for="password2">Confirmar Senha</label>-->
+            <input
+                type="password"
+                class="form-control"
+                id="password2"
+                name="password2"
+                placeholder="Confirme sua senha"
+            />
+        </div>
+        <br />
+        <button type="submit">Criar conta</button>
+    </form>
+</div>
+{% endblock %}

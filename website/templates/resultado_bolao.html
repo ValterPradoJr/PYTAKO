@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% block title %}Resultado do Bolão{% endblock %}
+{% block content %}
+<h1 align="center">Resultado do Bolão</h1>
+<h5 align="center">Resultados atualizados em tempo real</h5>
+{% if user.pagou_aposta and user_aposta %}
+
+<table class="table table-responsive-md">
+    <tr>
+        <th>Posição</th>
+        <th>Nome</th>
+        <th>Pontuação</th>
+        <th>Data da aposta</th>
+    </tr>
+    {% for resultado in resultados %}
+    <tr>
+        <td>{{loop.index}}</td>
+        <td><img src="{{resultado.user.foto_perfil}}" class="rounded-circle mx-1 my-auto" width="25" height="25" style="object-fit: cover; min-width: 25px; min-height: 25px;"/>
+        {{resultado.user.nome_completo}}</td>
+        <td>{{resultado.pontuacao}}</td>
+        <td>{{resultado.data_confirmacao}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<br/><br/>
+<h2 align="center">Para ter acesso à esta página:</h2>
+    {% if not user_aposta %}
+    <p align="center">Faça sua aposta primeiro (e pague ela!)</p>
+    {% else %}
+    {%if not user.pagou_aposta %}<p align="center">Realize o pagamento da sua aposta!</p>{% endif %}
+    {% endif %}
+{% endif %}
+{% endblock %}
+{% block javascript %}
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const apostasOutros = document.querySelectorAll('.aposta_outros');
+
+        let draggedItem = null;
+        updateItemNumbers()
+        // Update item numbers
+        function updateItemNumbers() {
+            for(var apostaFeita of apostasOutros){
+                const items = apostaFeita.querySelectorAll('.list-group-item');
+    
+                items?.forEach((item, index) => {
+                    const numberSpan = item.querySelector('.list-item-number');
+                    if (numberSpan) {
+                        numberSpan.textContent = (index + 1) + '.';
+                    }
+                });
+            }
+        }
+
+    });
+</script> -->
+{% endblock %}

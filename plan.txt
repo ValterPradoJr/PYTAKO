@@ -1,0 +1,30 @@
+Tabelas: 
+
+Usuário:
+    Id
+    Nome
+    Email
+    Senha
+    Data Inicio TI
+    Foto
+
+Aposta:
+    Id
+    IdUsuario
+    JsonAposta
+    DataConfirmacaoAposta
+
+Tabela Times:
+    Nome
+    URL Foto
+
+Telas do Site
+    Login
+    Cadastro
+    Redefinir Senha
+    Perfil
+    Minha Aposta
+    Tabela Brasileirão
+    Resultado Bolão
+    Apostas dos Outros
+    Regras

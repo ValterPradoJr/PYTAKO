@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% block title %}Regras{% endblock %}
+{% block content %}
+<h1 align="center">Regras</h1>
+
+<div id="accordion">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                    aria-controls="collapseOne">
+                    Regras de Pontuação
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <p>Você pode pontuar acertando a classificação exata ou acertando os grupos entre:</p>
+                <ul>
+                    <li>1º a 6º lugar</li>
+                    <li>7º a 16º lugar</li>
+                    <li>17º a 20º lugar</li>
+                </ul>
+                <p>Ao final do campeonato, os participantes do bolão serão
+                    convidados para um churrasco na Chico Churrascaria. O primeiro
+                    colocado do bolão terá a janta e o transporte pagos pelos demais
+                    participantes com o valor da inscrição.</p>
+                <p>Os critérios de desempate são os seguintes:</p>
+                <ul>
+                    <li>Acerto do campeão.</li>
+                    <li>Acerto do 20º lugar.</li>
+                    <li>Acerto do 2º ao 6º lugar.</li>
+                    <li>Acerto do 7º ao 16º lugar.</li>
+                    <li>Acerto do 17º ao 19º lugar.</li>
+                    <li>Quem cadastrou a aposta primeiro.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                    aria-controls="collapseTwo">
+                    Participação e Taxa de Inscrição
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+                <p>A participação está condicionada ao pagamento da taxa de
+                    inscrição no valor de R$ 25,00, a ser quitada até sexta-feira
+                    (12/04/2024) às 12:00h. Esta data também é o prazo limite para o
+                    cadastro das apostas até às 24:00h.
+                </p>
+                <p>O valor arrecadado será usado para cobrir o transporte até o local
+                    do churrasco e os custos associados ao desenvolvimento e
+                    manutenção do aplicativo.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                    aria-controls="collapseThree">
+                    Contingências e Premiação:
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+                <p>Em caso de eventos imprevisíveis (COVID, Furacão, Tsunami,
+                Terremoto, etc.) que impeçam a realização do churrasco até o
+                início da próxima temporada (2025), o valor arrecadado será
+                destinado ao Campeão do Bolão como prêmio.</p>
+                <p>Caso o Campeão do bolão opte por não participar do churrasco,
+                perderá o prêmio, que será destinado ao segundo colocado.</p>
+                <p>Se um apostador tiver o time que escolheu como campeão
+                rebaixado, terá 20 pontos deduzidos.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingFour">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false"
+                    aria-controls="collapseFour">
+                    Procedimentos de Inscrição e Estrutura Organizacional:
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+            <div class="card-body">
+                <p>Toda inscrição no bolão deve ser feita com indicação interna e
+                aprovação do comitê e presidência.</p>
+                <p>As inscrições são aceitas apenas pelo comitê de presidência,
+                composto pelos 3 últimos presidentes do bolão e pelo gestor de
+                logística.</p>
+                <p>O presidente do ano seguinte será eleito em eleições
+                democráticas durante o churrasco. Ele pode se candidatar ou a
+                maioria pode decidir democraticamente que ele será o presidente.
+                Em caso de mais de um candidato, a votação será realizada
+                anonimamente através do Google Forms.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingFive">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false"
+                    aria-controls="collapseFive">
+                    Pontuação Detalhada:
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table table-responsive">
+                    <tr>
+                        <th>Posição</th>
+                        <th>Pontuação: acertou a colocação</th>
+                        <th>Pontuação: não acertou a colocação</th>
+                    </tr>
+                    <tr>
+                        <td>1º Campeão</td>
+                        <td>30</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>2° ao 6° Lugar</td>
+                        <td>20</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>7° ao 16 Lugar</td>
+                        <td>10</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>17° ao 19°Lugar</td>
+                        <td>20</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>20° Rebaixado</td>
+                        <td>30</td>
+                        <td>15</td>
+                    </tr>
+                </table>
+                <ul>
+                    <li>Se TIME está na posição aposta 01 tabela 1 = 30</li>
+                    <li>Se TIME está na posição aposta 02 tabela 2 = 20</li>
+                    <li>Se TIME está na posição aposta 03 tabela 3 = 20</li>
+                    <li>Se TIME está na posição aposta 04 tabela 4 = 20</li>
+                    <li>Se TIME está na posição aposta 05 tabela 5 = 20</li>
+                    <li>Se TIME está na posição aposta 06 tabela 6 = 20</li>
+                    <li>Se TIME está na posição aposta 07 tabela 7 = 10</li>
+                    <li>Se TIME está na posição aposta 08 tabela 8 = 10</li>
+                    <li>Se TIME está na posição aposta 09 tabela 9 = 10</li>
+                    <li>Se TIME está na posição aposta 10 tabela 10 = 10</li>
+                    <li>Se TIME está na posição aposta 11 tabela 11 = 10</li>
+                    <li>Se TIME está na posição aposta 12 tabela 12 = 10</li>
+                    <li>Se TIME está na posição aposta 13 tabela 13 = 10</li>
+                    <li>Se TIME está na posição aposta 14 tabela 14= 10</li>
+                    <li>Se TIME está na posição aposta 15 tabela 15 = 10</li>
+                    <li>Se TIME está na posição aposta 16 tabela 16 = 10</li>
+                    <li>Se TIME está na posição aposta 17 tabela 17 = 20</li>
+                    <li>Se TIME está na posição aposta 18 tabela 18 = 20</li>
+                    <li>Se TIME está na posição aposta 19 tabela 19 = 20</li>
+                    <li>Se TIME está na posição aposta 20 tabela 20 = 30</li>
+                    <li>Se TIME está na posição aposta 01 tabela entre >17 e 20< = -20</li>
+                    <li>Se TIME está na posição aposta 01 tabela entre >1 e 6< = 15</li>
+                    <li>Se TIME está na posição aposta 02 tabela entre >1 e 6< = 15</li>
+                    <li>Se TIME está na posição aposta 03 tabela entre >1 e 6< = 15</li>
+                    <li>Se TIME está na posição aposta 04 tabela entre >1 e 6< = 15</li>
+                    <li>Se TIME está na posição aposta 05 tabela entre >1 e 6< = 15</li>
+                    <li>Se TIME está na posição aposta 06 tabela entre >1 e 6< = 15</li>
+                    <li>Se TIME está na posição aposta 07 tabela entre >7 e 16< = 5</li>
+                    <li>Se TIME está na posição aposta 08 tabela entre >7 e 16< = 5</li>
+                    <li>Se TIME está na posição aposta 09 tabela entre >7 e 16< = 5</li>
+                    <li>Se TIME está na posição aposta 10 tabela entre >7 e 16< = 5</li>
+                    <li>Se TIME está na posição aposta 11 tabela entre >7 e 16< = 5</li>
+                    <li>Se TIME está na posição aposta 12 tabela entre >7 e 16< = 5</li>
+                    <li>Se TIME está na posição aposta 13 tabela entre >7 e 16< = 5</li>
+                    <li>Se TIME está na posição aposta 14 tabela entre >7 e 16< = 5</li>
+                    <li>Se TIME está na posição aposta 15 tabela entre >7 e 16< = 5</li>
+                    <li>Se TIME está na posição aposta 16 tabela entre >7 e 16< = 5</li>
+                    <li>Se TIME está na posição aposta 17 tabela entre >17 e 20< = 15</li>
+                    <li>Se TIME está na posição aposta 18 tabela entre >17 e 20< = 15</li>
+                    <li>Se TIME está na posição aposta 19 tabela entre >17 e 20< = 15</li>
+                    <li>Se TIME está na posição aposta 20 tabela entre >17 e 20< = 15</li>
+                    <li>Se tiver apostadores empatados quem cadastrou/salvou a aposta primeiro vai ganhar um ponto para desempate.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

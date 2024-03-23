@@ -1,0 +1,33 @@
+{% extends "base.html" %} 
+{% block title %}
+    Tabela Brasileirão Série A
+{% endblock %} 
+{% block content %}
+<div class="container mt-5">
+    <!--<h1 class="text-center">Resultado Atual</h1>-->
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    {% for th in theaders %}
+                        <th scope="col">{{th}}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in tdata %}
+                    <tr>
+                        {% for td in row %}
+                            {% if loop.index == 2 %}
+                                <td><img src="{{td}}" class="rounded-circle" width="25" height="25" style="object-fit: cover;" alt="Brasão do Time"></td>
+                            {% else %}
+                                <td>{{td}}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

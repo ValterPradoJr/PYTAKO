@@ -1,0 +1,94 @@
+{% extends "base.html" %} 
+{% block title %}
+    Login
+{% endblock %} 
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
+<style>
+    body {
+        background-image: url('/static/imagens/maraca.jpeg'); /* Imagem de fundo */
+        background-size: cover; 
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat; /* Impede a repetição da imagem */
+    }
+    .login-container {
+        background-color: rgba(255, 255, 255, 0.8); /* Adiciona um fundo branco transparente ao formulário */
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 50px; /* Ajusta o espaçamento superior */
+        max-width: 400px; /* Define a largura máxima do contêiner */
+        margin-left: auto; /* Centraliza horizontalmente */
+        margin-right: auto; /* Centraliza horizontalmente */
+        text-align: center; /* Centraliza o conteúdo */
+    }
+    .login-container img {
+        max-width: 50%; /* Define uma largura máxima para a imagem */
+        display: block;
+        margin: 0 auto 20px; /* Centraliza horizontalmente e adiciona espaçamento inferior */
+    }
+    .login-container .form-group {
+        position: relative; /* Posição relativa para que possamos posicionar os ícones */
+    }
+    .login-container .form-group input {
+        padding-left: 40px; /* Adiciona espaço à esquerda do campo de entrada para o ícone */
+    }
+    .login-container .form-group .fas {
+        position: absolute; /* Posição absoluta para os ícones */
+        left: 10px; /* Ajuste a posição do ícone para a esquerda */
+        top: 50%; /* Centralize verticalmente */
+        transform: translateY(-50%); /* Ajuste fino da posição vertical */
+        color: #aaa; /* Cor do ícone */
+    }
+    .login-container .form-group input[type="email"]::placeholder,
+    .login-container .form-group input[type="password"]::placeholder {
+        color: #aaa;  
+    }
+    .login-container button {
+        display: block;
+        margin: 0 auto; /* Centraliza horizontalmente */
+        padding: 10px 20px; /* Adiciona preenchimento ao botão */
+        background-color: #006300; /* Cor de fundo do botão */
+        color: #fff; /* Cor do texto do botão */
+        border: none; /* Remove a borda */
+        border-radius: 5px; /* Adiciona bordas arredondadas */
+        cursor: pointer; /* Muda o cursor ao passar por cima */
+        transition: background-color 0.3s ease; /* Adiciona transição suave para a mudança de cor de fundo */
+        font-weight: bold;
+    }
+    .login-container button:hover {
+        background-color: #034b03; /* Altera a cor de fundo quando o cursor está sobre o botão */
+    }
+</style>
+
+<div class="login-container">
+    <form method="POST">
+        <img src="/static/imagens/logo.png" alt="Logo da Empresa"> <!-- logo -->
+        <div class="form-group">
+          <i class="fas fa-envelope"></i> 
+          <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              placeholder="Insira seu email"
+          />
+        </div>
+        <div class="form-group">
+          <i class="fas fa-lock"></i> 
+          <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              placeholder="Insira sua senha"
+          />
+            <a href="/forgot_password" title="Esqueceu sua senha?" style="font-size: 0.85rem;">Esqueceu sua senha?</a>
+            <a style="font-size: 0.85rem;">|</a>
+            <a href="/sign-up" title="Criar conta" style="font-size: 0.85rem;">Criar conta</a>
+        </div>
+        <br />
+        <button type="submit">Login</button>
+    </form>
+</div>
+{% endblock %}

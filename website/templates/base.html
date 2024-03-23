@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
+    <link rel="icon" href="/static/imagens/favicon.png" type="image/png">
+    <link rel="shortcut icon" href="/static/imagens/favicon.png" type="image/png">
+    <style>
+      .list-group-item.todolist {
+        cursor: move;
+      }
+      .list-item-number {
+        display: inline-block;
+        width: 20px;
+        margin-right: 10px;
+      }
+    </style>
+    {% block custom_style %}{% endblock  %}
+    <title>{% block title %}Home{% endblock %}</title>
+  </head>
+  <body>
+    {% if user.is_authenticated %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <button class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbar" >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbar">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" id="home" href="/" title="Início">Início</a>
+          <a class="nav-item nav-link" id="minha_aposta" href="/minha_aposta" title="Minha Aposta">Minha Aposta</a>
+          <a class="nav-item nav-link" id="tabelaBrasileirao" href="/tabela_brasileirao" title="Tabela Brasileirão">Tabela Brasileirão</a>
+          <a class="nav-item nav-link" id="tabelaBrasileirao" href="/resultado_bolao" title="Resultado do Bolão">Resultado do Bolão</a>
+          <a class="nav-item nav-link" id="tabelaBrasileirao" href="/apostas_outros" title="Apostas dos Outros">Apostas dos Outros</a>
+          <a class="nav-item nav-link" id="regras" href="/regras" title="Regras">Regras</a>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" href="/perfil" title="Perfil de {{user.nome_completo}}">
+            <!-- <img src="./static/no_picture.jpg" class="rounded-circle" width="25" height="25"> -->
+            <img src="{{user.foto_perfil}}" class="rounded-circle" width="25" height="25" style="object-fit: cover;">
+            <span class="nav-item navbar-link">{{user.nome_completo}}</span>
+          </a>
+          {% if user.has_admin %}
+          <a class="nav-item nav-link" id="logout" href="/admin_area" title="Área do Admin">Área do Admin</a>
+          {% endif %}
+          <a class="nav-item nav-link" id="logout" href="/logout" title="Sair" onclick="return confirm('Deseja mesmo sair?')">Sair</a>
+        </div>
+        {% endif %}
+      </div>
+    </nav>
+    {% endif %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {% if category ==
+    'error' %}
+    <div class="alert alert-danger alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
+
+    <div class="container">{% block content %} {% endblock %}</div>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+{% block javascript %}
+  <script type="text/javascript">
+      function deleteNote(noteId) {
+        fetch("/delete-note", {
+          method: "POST",
+          body: JSON.stringify({ noteId: noteId }),
+        }).then((_res) => {
+          window.location.href = "/";
+        });
+      }
+  </script>
+{% endblock %}
+  </body>
+</html>

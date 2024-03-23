@@ -1,0 +1,27 @@
+TOKEN API TESTE - test_64a06e5004e9cb4ff16958c7864b38
+TOKEN API TESTE2 -test_d05c0db20bdc8472e60aa51c15d553
+TOKEN API PRD - live_4471d775d1a70eeb4db88ba7eb75dd
+TOKEN API PRD2 - live_4ccb7bf65c4af9f009ae09916162ac
+
+https://api.api-futebol.com.br/v1/campeonatos
+
+Quais endpoints da api são os que eu vou precisar usar durante o projeto?
+Ao total são 20 times? São fixos esses 20?
+
+Home fica vazia e tem os menus
+
+Redefinir senha: tem campo para inserir email
+Perfil: tem os campos para editar os dados
+Minha aposta: quando ainda não feita, mostra a lista para editar, depois, mostra ela fixa com botão de confirmar aposta bloqueado. Libera um botão pra ver as apostas dos Outros
+Tabela do Brasileirão: mostra a lista com resultados atuais da tabela, botões para ver minha aposta, aposta dos outros e resultado do Bolão
+Resultado do bolão: mostra lista com resultados baseados nas apostas, botoes para ver tabela, minha aposta e aposta dos outros
+Apostas dos outros: mostra uma lista de apostas com caixas pra abrir com as apostas de cada um, botões para ver tabela, minha aposta e resultado do bolão
+Regras: Plain html com as Regras
+
+appbolaodosguri@gmail.com
+Bolao@2022
+
+https://docs.google.com/document/d/19sKON4tYsQmlQpwSK-UsiIcKcSIJjBS4/edit
+
+
+TO DO:

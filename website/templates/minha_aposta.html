@@ -1,0 +1,195 @@
+{% extends "base.html" %} {% block title %}Minha Aposta{% endblock %}
+{% block content %}
+<h1 align="center">Minha Aposta</h1>
+<div class="container mt-2" align="center">
+    <h2>{% if not has_aposta %}Organize sua aposta{% else %}Data de envio da aposta: {{current_aposta.data_confirmacao}}{% endif %}</h2>
+    <div class="row">
+      <div class="col-12 mx-auto d-flex">
+        <div class="card col-12">
+          <div class="card-body">
+            {% if not has_aposta %}
+            <div class="justify-content-between">
+              {% if not dias_restantes.days == 0 %}
+              <h5 class="card-title">Restam apenas {{dias_restantes.days}} dias para poder apostar!</h5>
+              {% else %}
+              <h5 class="card-title">Último dia para poder apostar!</h5>
+              {% endif %}
+              <button type="submit" id="salvar_aposta" class="btn btn-success m-2" {% if prazo_limite %}disabled{% endif %}>Salvar aposta</button>
+              <button type="submit" id="aposta_aleatoria" class="btn btn-warning m-2">Estou com sorte</button>
+            </div>
+            {% if prazo_limite %}
+            <div class="justify-content-between">
+              <p class="font-weight-bold">Acabou o prazo para cadastrar as apostas. Tente novamente no próximo ano.</p>
+            </div>
+            {% endif %}
+            <ol id="todoList" class="list-group">
+                {% for time in times %}
+                <li class="list-group-item list-group-item-action d-flex" draggable="true">
+                  <span class="list-item-number d-flex"></span>
+                  <img src="{{time.img_url}}" class="rounded-circle mx-2" width="25" height="25"/>
+                  {{time.nome}}
+                </li>
+                {% endfor %}
+            </ol>
+            {% else %}
+            <ol id="aposta_feita" class="list-group">
+              {% for time in formatted_aposta %}
+              <li class="list-group-item list-group-item-action d-flex" draggable="false">
+                <span class="list-item-number d-flex"></span>
+                <img src="{{time.img_url}}" class="rounded-circle mx-20" width="25" height="25"/>
+                {{time.nome}}
+              </li>
+              {% endfor %}
+            </ol>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block javascript %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const todoList = document.getElementById('todoList');
+    const apostaFeita = document.getElementById('aposta_feita');
+    const getRandomButton = document.getElementById('aposta_aleatoria');
+    const saveGuessButton = document.getElementById('salvar_aposta');
+
+    let draggedItem = null;
+    updateItemNumbers()
+    // Update item numbers
+    function updateItemNumbers() {
+      const items = todoList?.querySelectorAll('.list-group-item');
+      const itemsFeito = apostaFeita?.querySelectorAll('.list-group-item');
+      
+      items?.forEach((item, index) => {
+        const numberSpan = item.querySelector('.list-item-number');
+        if (numberSpan) {
+          numberSpan.textContent = (index + 1) + '.';
+        }
+      });
+      itemsFeito?.forEach((item, index) => {
+        const numberSpan = item.querySelector('.list-item-number');
+        if (numberSpan) {
+          numberSpan.textContent = (index + 1) + '.';
+        }
+      });
+    }
+
+    function handleSaveGuess(guessJson) {
+      // Chamar o Python
+      fetch("/salvar_aposta", {
+        method: "POST",
+        body: JSON.stringify(guessJson),
+      }).then((_res) => {
+        window.location.href = "/minha_aposta";
+      });
+    }
+
+    // Function to shuffle array
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    // Shuffle button click event
+    getRandomButton.addEventListener('click', function() {
+      const items = Array.from(todoList.children);
+      shuffleArray(items);
+      items.forEach(item => todoList.appendChild(item));
+      updateItemNumbers();
+    });
+
+    // Save guess click event
+    saveGuessButton.addEventListener('click', function() {
+      if(!confirm('Após salvar, a aposta não poderá ser editada.\n Confirma salvar a aposta?')) { return; }
+      const items = Array.from(todoList.children);
+      const guessJson = [];
+      items.forEach(item => {
+        let formattedRow = item.innerText.split('.\n');
+        guessJson.push({id: formattedRow[0], nome: formattedRow[1]});
+      });
+      handleSaveGuess(guessJson);
+    });
+
+    // Add event listeners to draggable items for both mouse and touch events
+    todoList.addEventListener('dragstart', function(event) {
+      draggedItem = event.target;
+      event.dataTransfer.setData('text/plain', ''); // for Firefox support
+      setTimeout(() => {
+        event.target.style.display = 'none';
+      }, 0);
+    });
+
+    todoList.addEventListener('dragover', function(event) {
+      event.preventDefault();
+      const afterElement = getDragAfterElement(todoList, event.clientY);
+      if (afterElement == null) {
+        todoList.appendChild(draggedItem);
+      } else {
+        todoList.insertBefore(draggedItem, afterElement);
+      }
+      updateItemNumbers();
+    });
+
+    todoList.addEventListener('dragend', function() {
+      setTimeout(() => {
+        draggedItem.style.display = 'block';
+        draggedItem = null;
+      }, 0);
+    });
+
+    // Touch events
+    let touchY;
+
+    todoList.addEventListener('touchstart', function(event) {
+      draggedItem = event.target;
+      touchY = event.touches[0].clientY// - draggedItem.getBoundingClientRect().top;
+      event.target.style.opacity = '0.5';
+      event.target.style.zIndex = '1000'; // Set z-index to make it appear above other items
+    });
+
+    todoList.addEventListener('touchmove', function(event) {
+      event.preventDefault();
+      if (draggedItem) {
+        const newPosition = event.touches[0].clientY // - touchY;//- todoList.getBoundingClientRect().top
+        //draggedItem.style.top = newPosition + 'px';
+
+        const afterElement = getDragAfterElement(todoList, newPosition);
+        if (afterElement == null) {
+            todoList.appendChild(draggedItem);
+        } else {
+            todoList.insertBefore(draggedItem, afterElement);
+        }
+      }
+    });
+
+    todoList.addEventListener('touchend', function(event) {
+      event.target.style.opacity = '1';
+      if (draggedItem) {
+        draggedItem.style.top = '';
+        draggedItem.style.zIndex = ''; // Reset z-index
+        draggedItem = null;
+      }
+      updateItemNumbers();
+    });
+
+    function getDragAfterElement(container, y) {
+      const draggableElements = [...container.querySelectorAll('.list-group-item:not(.dragging)')];
+
+      return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+          return { offset: offset, element: child };
+        } else {
+          return closest;
+        }
+      }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+  });
+</script>
+{% endblock %}
