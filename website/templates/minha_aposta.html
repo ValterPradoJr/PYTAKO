@@ -56,8 +56,8 @@ Minha Aposta
                     {% endif %}
                 </h2>
                 <div class="button-container">
-                    <button type="submit" id="salvar_aposta" class="btn btn-success" {% if prazo_limite %}disabled{% endif %}>Salvar aposta</button>
-                    <button type="submit" id="aposta_aleatoria" class="btn btn-warning">Estou com sorte</button>
+                    <button type="submit" id="salvar_aposta" class="btn" {% if prazo_limite %}disabled{% endif %}>Salvar aposta</button>
+                    <button type="submit" id="aposta_aleatoria" class="btn">Estou com sorte</button>
                 </div>
                 {% if prazo_limite %}
                     <p class="font-weight-bold text-center mt-3">Acabou o tempo de apostas. Tente novamente no próximo ano.</p>
