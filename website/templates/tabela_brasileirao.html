@@ -9,45 +9,63 @@
         background-size: cover; /* Cobrir toda a área do elemento pai */
         background-position: center; /* Centralizar a imagem */
     }
-
     .table {
         background-color: #ffffff; /* Plano de fundo da tabela */
         border-radius: 15px; /* Cantos arredondados da tabela */
         overflow: hidden; /* Para evitar que a borda redonda se estenda além da tabela */
     }
-
     .table th,
     .table td {
         border-radius: 0; /* Remover cantos arredondados dos elementos da tabela */
     }
-
     .legendas {
         display: flex;
         justify-content: space-around;
         font-weight: bold; /* Negrito */
     }
-
     .legendas2 {
         display: flex;
         justify-content: space-around;
-        color:#ffffff;
+        color:#000000;
         font-weight: bold; /* Negrito */
     }
-
-
     .legendas div {
         padding: 10px;
         border-radius: 8px;
     }
-
+    .legendas-tabela {
+        background-color: rgba(255, 255, 255); /* Adiciona um fundo branco transparente ao formulário */
+        border-radius: 10px;
+        border: 1px solid black;
+    }
     .libertadores { color: green; }
     .pre-libertadores { color: purple; }
     .sul-americana { color: orange; }
     .rebaixados { color: red; }
-</style>
+    </style>
 
 <div class="container mt-5">
     <!--<h1 class="text-center">Resultado Atual</h1>-->
+    <div class="legendas-tabela m-1">
+        <div class="legendas">
+            <div class="libertadores">Libertadores</div>
+            <div class="pre-libertadores">Pré-libertadores</div>
+            <div class="sul-americana">Copa Sul-Americana</div>
+            <div class="rebaixados">Rebaixados</div>
+        </div>
+        <div class="legendas2"> 
+            <a>
+            P: Pontos |
+            J: Jogos |
+            V: Vitórias |
+            E: Empates |
+            D: Derrotas |
+            GP: Gols Pró |
+            GC: Gols Contra |
+            SG: Saldo de Gols |
+            %: Aproveitamento</a>
+        </div>
+    </div>
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
@@ -71,24 +89,6 @@
                 {% endfor %}
             </tbody>
         </table>
-    </div>
-    <div class="legendas">
-        <div class="libertadores">Libertadores</div>
-        <div class="pre-libertadores">Pré-libertadores</div>
-        <div class="sul-americana">Copa Sul-Americana</div>
-        <div class="rebaixados">Rebaixados</div>
-    </div>
-    <div class="legendas2"> 
-        <a>
-        P: Pontos |
-        J: Jogos |
-        V: Vitórias |
-        E: Empates |
-        D: Derrotas |
-        GP: Gols Pró |
-        GC: Gols Contra |
-        SG: Saldo de Gols |
-        %: Aproveitamento</a>
     </div>
 </div>
 {% endblock %}
