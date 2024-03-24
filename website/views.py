@@ -16,18 +16,56 @@ ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif'}
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
-    if request.method == 'POST': 
-        note = request.form.get('note')#Gets the note from the HTML 
+    #Tabela brasileirão
+    table = get_resultado_bolao()
+    headers = [header.text.strip() for header in table.find_all("th")] # Extrair os cabeçalhos da tabela
+    headers.insert(0, 'Posição:')
+    headers.insert(1, '')
+    headers.insert(3, 'Status')
+    # Extrair os dados da tabela
+    has_times = len(Time.query.all()) > 0
+    data = []
+    for row in table.find_all("tr"):
+        images = row.findAll('img')
+        row_image = ''
+        for image in images:
+            row_image = image['src']
+        row_data = [cell.text.strip() for cell in row.find_all("td")]
+        if row_data:
+            row_data[1] = row_image
+            row_data[2] = row_data[2].replace(" >>","")
+            data.append(row_data)
+            if not has_times:
+                new_time = Time(nome=row_data[2].replace(" >>",""), img_url=row_image)
+                db.session.add(new_time)
+                db.session.commit()
 
-        if len(note) < 1:
-            flash('Note is too short!', category='error') 
-        else:
-            new_note = Note(data=note, user_id=current_user.id)  #providing the schema for the note 
-            db.session.add(new_note) #adding the note to the database 
-            db.session.commit()
-            flash('Note added!', category='success')
-    
-    return render_template("home.html", user=current_user)
+    #Busca resultados bolão
+    user_aposta = Aposta.query.filter_by(user_id=current_user.id).first()
+    apostas = Aposta.query.all()
+    #users = User.query.all()
+    users = User.query.filter_by(pagou_aposta=True).all()
+    table = get_resultado_bolao()
+    # Extrair os dados da tabela
+    data = []
+    resultado_step_1 = []
+    counter = 1
+    resultado_step_2 = []
+    for row in table.find_all("tr"):
+        row_data = [cell.text.strip() for cell in row.find_all("td")]
+        if row_data:
+            data.append(row_data)
+    for row_data in data:
+        nome_time = row_data[2].replace(" >>","")
+        resultado_step_1.append({'id':counter,'nome':nome_time})
+        counter += 1
+    if resultado_step_1:
+        if users:
+            resultado_step_2 = sorted(calcular_resultado(resultado_step_1,apostas,users), key=lambda x: (-x['pontuacao'], x['data_confirmacao']))
+            #sorted(lista_apostadores, key=lambda x: x["aposta_primeiro"], reverse=True)
+            print(resultado_step_2)
+
+    return render_template("home.html", user=current_user, theaders=headers, tdata=data, user_aposta=user_aposta, resultados=resultado_step_2)
 
 @views.route('/tabela_brasileirao', methods=['GET'])
 @login_required
