@@ -1,6 +1,6 @@
 {% extends "base.html" %} 
 {% block title %}
-    Login
+    PYTAKO - Login
 {% endblock %} 
 {% block content %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
@@ -40,6 +40,10 @@
         transform: translateY(-50%); /* Ajuste fino da posição vertical */
         color: #aaa; /* Cor do ícone */
     }
+    .login-container .form-group .fa-lock {
+        top: 30%; /* Centralize verticalmente */
+    }
+    
     .login-container .form-group input[type="email"]::placeholder,
     .login-container .form-group input[type="password"]::placeholder {
         color: #aaa;  
@@ -63,7 +67,8 @@
 
 <div class="login-container">
     <form method="POST">
-        <img src="/static/imagens/logo.png" alt="Logo da Empresa"> <!-- logo -->
+        <img src="/static/imagens/logo.png" alt="PYTAKO"> <!-- logo -->
+        <h5 style="margin-top: -30px;;">PYTAKO</h5>
         <div class="form-group">
           <i class="fas fa-envelope"></i> 
           <input
