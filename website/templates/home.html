@@ -123,7 +123,7 @@
                     {% endfor %}
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="resultados">
                 {% for row in tdata %}
                     <tr>
                         {% for td in row %}
@@ -143,5 +143,25 @@
 </div>
 {% endblock %}
 {% block javascript %}
-
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const rowsTimes = document.getElementById('resultados');
+        const colorMatchMap = {
+            '1': 'green', '2': 'green', '3': 'green', '4': 'green',
+            '5': 'purple', '6': 'purple',
+            '7': 'orange', '8': 'orange', '9': 'orange', '10': 'orange', '11': 'orange', '12': 'orange',
+            '17': 'red', '18': 'red', '19': 'red', '20': 'red'
+        }
+        rowsTimes.querySelectorAll('tr').forEach(row => {
+            console.log(row.firstElementChild.innerText)
+            let posicao = row.firstElementChild.innerText;
+            console.log(posicao)
+            if(colorMatchMap[posicao]) {
+                row.firstElementChild.setAttribute('style', `color: ${colorMatchMap[posicao]}; font-weight: bold;`);
+            } else {
+                row.firstElementChild.setAttribute('style', `font-weight: bold;`);
+            }
+        })
+    });
+</script>
 {% endblock %}
