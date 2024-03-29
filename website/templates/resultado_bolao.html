@@ -12,6 +12,8 @@
         background-color: rgba(255, 255, 255, 0.8); /* Adiciona um fundo branco transparente ao formulário */
         border-radius: 10px;
         padding: auto;
+        padding-left: 15px;
+        padding-right: 15px;
         margin-top: 50px; /* Ajusta o espaçamento superior */
         max-width: auto; /* Define a largura máxima do contêiner */
         margin-left: auto; /* Centraliza horizontalmente */
@@ -30,29 +32,35 @@
     .table-responsive-md {
         padding: 10px;
     }
+    @media (min-width: 150px) and (max-width: 550px) {
+        .foto-perfil {
+            display: none;
+        }
+    }
 </style>
 <div class="resultado-bolao">
     <h1 align="center">Resultado do Bolão</h1>
     <h5 align="center">Resultados atualizados em tempo real</h5>
     {% if user.pagou_aposta and user_aposta %}
-    
-    <table class="table table-responsive-md">
-        <tr>
-            <th>Posição</th>
-            <th>Nome</th>
-            <th>Pontuação</th>
-            <th>Data da aposta</th>
-        </tr>
-        {% for resultado in resultados %}
-        <tr>
-            <td>{{loop.index}}</td>
-            <td><img src="{{resultado.user.foto_perfil}}" class="rounded-circle mx-1 my-auto" width="25" height="25" style="object-fit: cover; min-width: 25px; min-height: 25px;"/>
-                {{resultado.user.nome_completo}}</td>
-                <td>{{resultado.pontuacao}}</td>
-                <td>{{resultado.data_confirmacao}}</td>
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <th>Posição</th>
+                <th>Nome</th>
+                <th>Pontuação</th>
+                <th>Data da aposta</th>
             </tr>
-            {% endfor %}
-    </table>
+            {% for resultado in resultados %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td><img src="{{resultado.user.foto_perfil}}" class="rounded-circle mx-1 my-auto foto-perfil" width="25" height="25" style="object-fit: cover; min-width: 25px; min-height: 25px;"/>
+                    {{resultado.user.nome_completo}}</td>
+                    <td>{{resultado.pontuacao}}</td>
+                    <td>{{resultado.data_confirmacao}}</td>
+                </tr>
+                {% endfor %}
+        </table>
+    </div>
     {% else %}
     <br/><br/>
     <h2 align="center">Para ter acesso à esta página:</h2>
