@@ -1,57 +1,68 @@
 {% extends "base.html" %} {% block title %}Resultado do Bolão{% endblock %}
 {% block content %}
-<h1 align="center">Resultado do Bolão</h1>
-<h5 align="center">Resultados atualizados em tempo real</h5>
-{% if user.pagou_aposta and user_aposta %}
-
-<table class="table table-responsive-md">
-    <tr>
-        <th>Posição</th>
-        <th>Nome</th>
-        <th>Pontuação</th>
-        <th>Data da aposta</th>
-    </tr>
-    {% for resultado in resultados %}
-    <tr>
-        <td>{{loop.index}}</td>
-        <td><img src="{{resultado.user.foto_perfil}}" class="rounded-circle mx-1 my-auto" width="25" height="25" style="object-fit: cover; min-width: 25px; min-height: 25px;"/>
-        {{resultado.user.nome_completo}}</td>
-        <td>{{resultado.pontuacao}}</td>
-        <td>{{resultado.data_confirmacao}}</td>
-    </tr>
-    {% endfor %}
-</table>
-{% else %}
-<br/><br/>
-<h2 align="center">Para ter acesso à esta página:</h2>
-    {% if not user_aposta %}
-    <p align="center">Faça sua aposta primeiro (e pague ela!)</p>
+<style>
+    body {
+        background-image: url('/static/imagens/maraca.jpeg'); /* Imagem de fundo */
+        background-size: cover; 
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat; /* Impede a repetição da imagem */
+    }
+    .resultado-bolao {
+        background-color: rgba(255, 255, 255, 0.8); /* Adiciona um fundo branco transparente ao formulário */
+        border-radius: 10px;
+        padding: auto;
+        margin-top: 50px; /* Ajusta o espaçamento superior */
+        max-width: auto; /* Define a largura máxima do contêiner */
+        margin-left: auto; /* Centraliza horizontalmente */
+        margin-right: auto; /* Centraliza horizontalmente */
+        text-align: center; /* Centraliza o conteúdo */
+    }
+    .table {
+      background-color: #ffffff; /* Plano de fundo da tabela */
+      border-radius: 5px; /* Cantos arredondados da tabela */
+      overflow: hidden; /* Para evitar que a borda redonda se estenda além da tabela */
+    }
+    .table th,
+    .table td {
+        border-radius: 5; /* Remover cantos arredondados dos elementos da tabela */
+    }
+    .table-responsive-md {
+        padding: 10px;
+    }
+</style>
+<div class="resultado-bolao">
+    <h1 align="center">Resultado do Bolão</h1>
+    <h5 align="center">Resultados atualizados em tempo real</h5>
+    {% if user.pagou_aposta and user_aposta %}
+    
+    <table class="table table-responsive-md">
+        <tr>
+            <th>Posição</th>
+            <th>Nome</th>
+            <th>Pontuação</th>
+            <th>Data da aposta</th>
+        </tr>
+        {% for resultado in resultados %}
+        <tr>
+            <td>{{loop.index}}</td>
+            <td><img src="{{resultado.user.foto_perfil}}" class="rounded-circle mx-1 my-auto" width="25" height="25" style="object-fit: cover; min-width: 25px; min-height: 25px;"/>
+                {{resultado.user.nome_completo}}</td>
+                <td>{{resultado.pontuacao}}</td>
+                <td>{{resultado.data_confirmacao}}</td>
+            </tr>
+            {% endfor %}
+    </table>
     {% else %}
-    {%if not user.pagou_aposta %}<p align="center">Realize o pagamento da sua aposta!</p>{% endif %}
+    <br/><br/>
+    <h2 align="center">Para ter acesso à esta página:</h2>
+        {% if not user_aposta %}
+        <p align="center">Faça sua aposta primeiro (e pague ela!)</p>
+        {% else %}
+            {%if not user.pagou_aposta %}<p align="center">Realize o pagamento da sua aposta!</p>{% endif %}
+        {% endif %}
     {% endif %}
-{% endif %}
+</div>
 {% endblock %}
 {% block javascript %}
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const apostasOutros = document.querySelectorAll('.aposta_outros');
-
-        let draggedItem = null;
-        updateItemNumbers()
-        // Update item numbers
-        function updateItemNumbers() {
-            for(var apostaFeita of apostasOutros){
-                const items = apostaFeita.querySelectorAll('.list-group-item');
-    
-                items?.forEach((item, index) => {
-                    const numberSpan = item.querySelector('.list-item-number');
-                    if (numberSpan) {
-                        numberSpan.textContent = (index + 1) + '.';
-                    }
-                });
-            }
-        }
-
-    });
-</script> -->
 {% endblock %}

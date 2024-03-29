@@ -1,45 +1,68 @@
 {% extends "base.html" %} {% block title %}Minha Aposta{% endblock %}
 {% block content %}
-<h1 align="center">Apostas dos Outros</h1>
-{% if user.pagou_aposta and user_aposta %}
-<div class="mt-2" align="center">
-    <div class="row">
-        {% for row_user in users %}
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 d-flex my-2">
-            <div class="card col">
-                <div class="mt-2">
-                    <img src="{{row_user.user_data.foto_perfil}}" class="rounded-circle" width="25" height="25" />
-                    <span>{{row_user.user_data.nome_completo}}</span>
-                    <br/>
-                    <span>Data de envio da aposta:</span>
-                    <br/>
-                    <span>{{row_user.aposta.data_confirmacao}}</span>
-                </div>
-                <div class="card-body">
-                    <ol class="list-group aposta_outros">
-                        {% for time in row_user.formatted_aposta %}
-                        <li class="list-group-item list-group-item-action d-flex text-truncate" draggable="false">
-                            <span class="list-item-number d-flex"></span>
-                            <img src="{{time.img_url}}" class="rounded-circle mx-2" width="25" height="25" />
-                            {{time.nome}}
-                        </li>
-                        {% endfor %}
-                    </ol>
+<style>
+    body {
+        background-image: url('/static/imagens/maraca.jpeg'); /* Imagem de fundo */
+        background-size: cover; 
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat; /* Impede a repetição da imagem */
+    }
+    .apostas-container {
+        background-color: rgba(255, 255, 255, 0.8); /* Adiciona um fundo branco transparente ao formulário */
+        border-radius: 10px;
+        padding: auto;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-top: 50px; /* Ajusta o espaçamento superior */
+        max-width: auto; /* Define a largura máxima do contêiner */
+        margin-left: auto; /* Centraliza horizontalmente */
+        margin-right: auto; /* Centraliza horizontalmente */
+        text-align: center; /* Centraliza o conteúdo */
+    }
+</style>
+<div class="apostas-container">
+    <h1 align="center">Apostas dos Outros</h1>
+    {% if user.pagou_aposta and user_aposta %}
+    <div class="mt-2" align="center">
+        <div class="row">
+            {% for row_user in users %}
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 d-flex my-2">
+                <div class="card col">
+                    <div class="mt-2">
+                        <img src="{{row_user.user_data.foto_perfil}}" class="rounded-circle" width="25" height="25" />
+                        <span>{{row_user.user_data.nome_completo}}</span>
+                        <br/>
+                        <span>Data de envio da aposta:</span>
+                        <br/>
+                        <span>{{row_user.aposta.data_confirmacao}}</span>
+                    </div>
+                    <div class="card-body">
+                        <ol class="list-group aposta_outros">
+                            {% for time in row_user.formatted_aposta %}
+                            <li class="list-group-item list-group-item-action d-flex text-truncate" draggable="false">
+                                <span class="list-item-number d-flex"></span>
+                                <img src="{{time.img_url}}" class="rounded-circle mx-2" width="25" height="25" />
+                                {{time.nome}}
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
-{% else %}
-<br/><br/>
-<h2 align="center">Para ter acesso à esta página:</h2>
-    {% if not user_aposta %}
-    <p align="center">Faça sua aposta primeiro (e pague ela!)</p>
     {% else %}
-    {%if not user.pagou_aposta %}<p align="center">Realize o pagamento da sua aposta!</p>{% endif %}
+    <br/><br/>
+    <h2 align="center">Para ter acesso à esta página:</h2>
+        {% if not user_aposta %}
+        <p align="center">Faça sua aposta primeiro (e pague ela!)</p>
+        {% else %}
+        {%if not user.pagou_aposta %}<p align="center">Realize o pagamento da sua aposta!</p>{% endif %}
+        {% endif %}
     {% endif %}
-{% endif %}
+</div>
 {% endblock %}
 {% block javascript %}
 <script>

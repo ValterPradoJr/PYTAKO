@@ -10,7 +10,10 @@ def calcular_resultado(tabela_atual, apostas, usuarios):
         print(usuario.nome_completo)
     for aposta in apostas:
 
-        apostador = next(user for user in usuarios if user.id == aposta.user_id)
+        try: 
+            apostador = next(user for user in usuarios if user.id == aposta.user_id)
+        except StopIteration:
+            continue
         print(aposta.user_id)
         aposta_json = json.loads(aposta.aposta_json)
         soma_pontuacao = 0

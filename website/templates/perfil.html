@@ -1,58 +1,79 @@
 {% extends "base.html" %}
 {% block title %}Meu Perfil{% endblock %}
 {% block content %}
-<form method="POST" enctype="multipart/form-data">
-    <h3 align="center">Meu Perfil</h3>
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="card mb-4">
-                <div class="card-body text-center">
-                    <img src="{{user.foto_perfil}}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px; height: 150px; object-fit: cover;">
-                    <h5 class="my-3">{{user.nome_completo}}</h5>
-                    <div class="input-group justify-content-center mb-2 d-block">
-                        <input type="file" class="form-control" id="foto_perfil" name="foto_perfil"/>
-                        <button type="submit" class="btn btn-primary m-2">Salvar alterações</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-8">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Nome Completo</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control text-muted mb-0" id="nome_completo"
-                                name="nome_completo" placeholder="Insira seu nome completo"
-                                value="{{user.nome_completo}}" />
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Email</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="email" class="form-control text-muted mb-0" id="email" name="email"
-                                placeholder="Enter email" value="{{user.email}}" />
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Data de Início na TI</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="date" class="form-control" id="data_inicioti" name="data_inicioti"
-                                value="{{user.data_inicioti}}" />
+<style>
+    body {
+        background-image: url('/static/imagens/maraca.jpeg'); /* Imagem de fundo */
+        background-size: cover; 
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat; /* Impede a repetição da imagem */
+    }
+    .perfil-container {
+        background-color: rgba(255, 255, 255, 0.8); /* Adiciona um fundo branco transparente ao formulário */
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 50px; /* Ajusta o espaçamento superior */
+        max-width: auto; /* Define a largura máxima do contêiner */
+        margin-left: auto; /* Centraliza horizontalmente */
+        margin-right: auto; /* Centraliza horizontalmente */
+        text-align: center; /* Centraliza o conteúdo */
+    }
+</style>
+<div class="perfil-container">
+    <form method="POST" enctype="multipart/form-data">
+        <h3 align="center">Meu Perfil</h3>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img src="{{user.foto_perfil}}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px; height: 150px; object-fit: cover;">
+                        <h5 class="my-3">{{user.nome_completo}}</h5>
+                        <div class="input-group justify-content-center mb-2 d-block">
+                            <input type="file" class="form-control" id="foto_perfil" name="foto_perfil"/>
+                            <button type="submit" class="btn btn-primary m-2">Salvar alterações</button>
                         </div>
                     </div>
                 </div>
             </div>
+    
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Nome Completo</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control text-muted mb-0" id="nome_completo"
+                                    name="nome_completo" placeholder="Insira seu nome completo"
+                                    value="{{user.nome_completo}}" />
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Email</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control text-muted mb-0" id="email" name="email"
+                                    placeholder="Enter email" value="{{user.email}}" />
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Data de Início na TI</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" id="data_inicioti" name="data_inicioti"
+                                    value="{{user.data_inicioti}}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
 {% endblock %}

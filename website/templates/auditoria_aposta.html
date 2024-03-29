@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}
+Auditoria da Aposta
+{% endblock %}
+{% block content %}
+<style>
+    body {
+        background-image: url('/static/imagens/maraca.jpeg'); /* Imagem de fundo */
+        background-size: cover; 
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat; /* Impede a repetição da imagem */
+    }
+    .aposta-container {
+        background-color: rgba(255, 255, 255, 0.8); /* Adiciona um fundo branco transparente ao formulário */
+        border-radius: 10px;
+        padding: auto;
+        margin-top: 50px; /* Ajusta o espaçamento superior */
+        max-width: auto; /* Define a largura máxima do contêiner */
+        margin-left: auto; /* Centraliza horizontalmente */
+        margin-right: auto; /* Centraliza horizontalmente */
+        text-align: center; /* Centraliza o conteúdo */
+    }
+</style>
+<div class="container mt-4 aposta-container">
+    {% if user.has_admin %}
+        {% if not current_aposta %}
+        <h1 class="text-center">Erro 404</h1>
+        <br/>
+        <h3 class="text-center">Esta aposta não existe</h3>
+        <h5 class="text-center">O que você estava tentando fazer? 👀</h5>
+        {% else %}
+        <h3 class="text-center">Aposta de {{owner.nome_completo}}</h3>
+        <h5 class="text-center">Data da aposta: {{ current_aposta.data_confirmacao }}</h5>
+        <h5 class="text-center">Pontuação total: {{ pontuacao_total }}</h5>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <ol id="aposta_feita" class="list-group mt-4">
+                    {% for time in formatted_aposta %}
+                        <li class="list-group-item list-group-item-action d-flex" draggable="false">
+                            <span class="list-item-number d-flex"></span>
+                            <img src="{{ time.img_url }}" class="rounded mx-2" width="25" height="25"/>
+                            <div class="d-flex justify-content-between" style="width: 100%;"><span>{{ time.nome }}</span><span class>Pontos: {{time.pontuacao}}</span></div>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+        {% endif %}
+    {% else %}
+    <br />
+    <br />
+    <h1 align="center">Você não tem acesso à esta página.</h1>
+    <h1 align="center">Contate o administrador.</h1>
+    <h2 align="center">Caso você for o administrador, aí eu já não sei o que posso aconselhar a fazer 🤨</h2>
+    <br />
+    <br />
+    <p align="center">Talvez deletar o banco de dados...</p>
+    {% endif %}
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const apostaFeita = document.getElementById('aposta_feita');
+        updateItemNumbers()
+        // Update item numbers
+        function updateItemNumbers() {
+            const items = apostaFeita.querySelectorAll('.list-group-item');
+
+            items?.forEach((item, index) => {
+                const numberSpan = item.querySelector('.list-item-number');
+                if (numberSpan) {
+                    numberSpan.textContent = (index + 1) + '.';
+                }
+            });
+        }
+
+    });
+</script>
+{% endblock %}
