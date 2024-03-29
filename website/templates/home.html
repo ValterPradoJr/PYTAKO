@@ -3,10 +3,22 @@
 {% block content %}
 <style>
   body {
-      background-image: url('/static/imagens/maraca.jpeg'); /* Imagem de fundo */
-      background-size: cover; /* Cobrir toda a área do elemento pai */
-      background-position: center; /* Centralizar a imagem */
+    background-image: url('/static/imagens/maraca.jpeg'); /* Imagem de fundo */
+    background-size: cover; /* Cobrir toda a área do elemento pai */
+    background-position: center; /* Centralizar a imagem */
+    background-attachment: fixed;
+    background-repeat: no-repeat; /* Impede a repetição da imagem */
   }
+  .main-area {
+        background-color: rgba(255, 255, 255, 0.8); /* Adiciona um fundo branco transparente ao formulário */
+        border-radius: 10px;
+        padding: auto;
+        margin-top: 50px; /* Ajusta o espaçamento superior */
+        max-width: auto; /* Define a largura máxima do contêiner */
+        margin-left: auto; /* Centraliza horizontalmente */
+        margin-right: auto; /* Centraliza horizontalmente */
+        text-align: center; /* Centraliza o conteúdo */
+    }
   .table {
       background-color: #ffffff; /* Plano de fundo da tabela */
       border-radius: 5px; /* Cantos arredondados da tabela */
@@ -37,84 +49,98 @@
   .legendas-tabela {
       background-color: rgba(255, 255, 255); /* Adiciona um fundo branco transparente ao formulário */
       border-radius: 5px;
-      border: 1px solid black;
   }
   .libertadores { color: green; }
   .pre-libertadores { color: purple; }
   .sul-americana { color: orange; }
   .rebaixados { color: red; }
-  </style>
-<h1 align="center">PYTAKO</h1>
-<!--Resultado bolão inicio-->
-<h1 class="text-center">Classificação bolão</h1>
-<table class="table table-responsive-md">
-    <tr>
-        <th>Posição</th>
-        <th>Nome</th>
-        <th>Pontuação</th>
-        <th>Data da aposta</th>
-    </tr>
-    {% for resultado in resultados %}
-    <tr>
-        <td>{{loop.index}}</td>
-        <td><img src="{{resultado.user.foto_perfil}}" class="rounded-circle mx-1 my-auto" width="25" height="25" style="object-fit: cover; min-width: 25px; min-height: 25px;"/>
-        {{resultado.user.nome_completo}}</td>
-        <td>{{resultado.pontuacao}}</td>
-        <td>{{resultado.data_confirmacao}}</td>
-    </tr>
-    {% endfor %}
-</table>
-<!--Resultado bolão fim
--------------------------->
-<!--Tabela brasileirão inicio-->
-<div class="container mt-5">
-  <h1 class="text-center">Tabela Brasileirão série A</h1>
-  <div class="legendas-tabela m-1">
-      <div class="legendas">
-          <div class="libertadores">Libertadores</div>
-          <div class="pre-libertadores">Pré-libertadores</div>
-          <div class="sul-americana">Copa Sul-Americana</div>
-          <div class="rebaixados">Rebaixados</div>
-      </div>
-      <div class="legendas2"> 
-          <a>
-          P: Pontos |
-          J: Jogos |
-          V: Vitórias |
-          E: Empates |
-          D: Derrotas |
-          GP: Gols Pró |
-          GC: Gols Contra |
-          SG: Saldo de Gols |
-          %: Aproveitamento</a>
-      </div>
-  </div>
-  <div class="table-responsive">
-      <table class="table table-bordered table-striped">
-          <thead class="thead-dark">
-              <tr>
-                  {% for th in theaders %}
-                      <th scope="col">{{th}}</th>
-                  {% endfor %}
-              </tr>
-          </thead>
-          <tbody>
-              {% for row in tdata %}
-                  <tr>
-                      {% for td in row %}
-                          {% if loop.index == 2 %}
-                              <td><img src="{{td}}" width="25" height="25" style="object-fit: cover;" alt="Brasão do Time"></td>
-                          {% else %}
-                              <td>{{td}}</td>
-                          {% endif %}
-                      {% endfor %}
-                  </tr>
-              {% endfor %}
-          </tbody>
-      </table>
-  </div>
-</div>
+  @media (min-width: 150px) and (max-width: 550px) {
+        .legendas {
+            flex-direction: column;
+        }
+        .foto-perfil {
+            display: none;
+        }
+    }
+</style>
+<div class="main-area">
+    <h2 align="center">PYTAKO</h1>
+    <!--Resultado bolão inicio-->
+    {% if user.pagou_aposta and user_aposta %}
+    <h3 class="text-center">Classificação Bolão</h3>
+    <div class="table-responsive">
+        <table class="table" style="width: 95%; margin: auto;">
+            <tr>
+                <th>Posição</th>
+                <th>Nome</th>
+                <th>Pontuação</th>
+                <th>Data da aposta</th>
+            </tr>
+            {% for resultado in resultados %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td><img src="{{resultado.user.foto_perfil}}" class="rounded-circle mx-1 my-auto foto-perfil" width="25" height="25" style="object-fit: cover; min-width: 25px; min-height: 25px;"/>
+                {{resultado.user.nome_completo}}</td>
+                <td>{{resultado.pontuacao}}</td>
+                <td>{{resultado.data_confirmacao}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+    <!--Resultado bolão fim
+    -------------------------->
+    <!--Tabela brasileirão inicio-->
+    <div class="container mt-5">
+    <h3 class="text-center">Tabela Brasileirão</h3>
+    <h5 class="text-center">Série A</h5>
+    <div class="legendas-tabela m-1">
+        <div class="legendas">
+            <div class="libertadores">Libertadores</div>
+            <div class="pre-libertadores">Pré-libertadores</div>
+            <div class="sul-americana">Copa Sul-Americana</div>
+            <div class="rebaixados">Rebaixados</div>
+        </div>
+        <div class="legendas2"> 
+            <a>
+            P: Pontos |
+            J: Jogos |
+            V: Vitórias |
+            E: Empates |
+            D: Derrotas |
+            GP: Gols Pró |
+            GC: Gols Contra |
+            SG: Saldo de Gols |
+            %: Aproveitamento</a>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    {% for th in theaders %}
+                        <th scope="col">{{th}}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in tdata %}
+                    <tr>
+                        {% for td in row %}
+                            {% if loop.index == 2 %}
+                                <td><img src="{{td}}" width="25" height="25" style="object-fit: cover;" alt="Brasão do Time"></td>
+                            {% else %}
+                                <td>{{td}}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
 <!--Tabela brasileirão fim-->
+</div>
 {% endblock %}
 {% block javascript %}
 

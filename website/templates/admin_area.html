@@ -14,97 +14,124 @@
     .number-custom {
         font-weight: 500;
     }
+    body {
+        background-image: url('/static/imagens/maraca.jpeg'); /* Imagem de fundo */
+        background-size: cover; 
+        background-position: center;
+        background-attachment: fixed;
+    }
+    .admin_area-container {
+        background-color: rgba(255, 255, 255, 0.8); /* Adiciona um fundo branco transparente ao formulário */
+        border-radius: 10px;
+        padding: auto;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-top: 50px; /* Ajusta o espaçamento superior */
+        max-width: auto; /* Define a largura máxima do contêiner */
+        margin-left: auto; /* Centraliza horizontalmente */
+        margin-right: auto; /* Centraliza horizontalmente */
+        text-align: center; /* Centraliza o conteúdo */
+    }
+    @media (min-width: 249px) and (max-width: 480px) {
+        .image {
+            display: none;
+        }
+    }
 </style>
 {% endblock %}
 {% block title %}Área do Administrador{% endblock %}
 {% block content %}
-
-<h3 align="center">Área do Administrador</h3>
-{% if user.has_admin %}
-<h5 align="center">Usuários</h5>
-<div class="container-fluid mt-3 d-flex justify-content-center">
-    <div class="row">
-        {% for user_row in users %}
-        <div class="card p-3 m-2">
-            <div class="d-flex align-items-center">
-                <div class="image">
-                    <img src="{{user_row.foto_perfil}}" class="rounded" width="150px" height="150px"
-                        style="object-fit: cover;">
-                </div>
-                <div class="ml-3">
-                    <h5 class="mb-0 mt-0">{{user_row.nome_completo}}</h5>
-                    <span>{{user_row.email}}</span>
-                    <div class="p-3 m-2 bg-primary d-flex justify-content-between rounded text-white stats row">
-                        <div class="d-flex flex-column mx-1">
-                            <span class="detail-custom">Data de Início na TI</span>
-                            <span class="number-custom">{{user_row.data_inicioti}}</span>
-                        </div>
-                        <div class="d-flex flex-column mx-1">
-                            <span class="detail-custom">Acesso Admin</span>
-                            <span class="number-custom">{% if user_row.has_admin %}👍{% else %}❌{% endif %}</span>
-                        </div>
-                        <div class="d-flex flex-column mx-1">
-                            <span class="detail-custom">Pagou Aposta?</span>
-                            <span class="number-custom">{% if user_row.pagou_aposta %}👍{% else %}❌{% endif %}</span>
-                        </div>
+<div class="admin_area-container">
+    <h3 align="center">Área do Administrador</h3>
+    {% if user.has_admin %}
+    <h5 align="center">Usuários</h5>
+    <div class="container-fluid mt-3 d-flex justify-content-center">
+        <div class="row">
+            {% for user_row in users %}
+            <div class="card p-3 m-2">
+                <div class="d-flex align-items-center">
+                    <div class="image">
+                        <img src="{{user_row.foto_perfil}}" class="rounded" width="150px" height="150px"
+                            style="object-fit: cover;">
                     </div>
-                    <div class="button mt-2 d-flex flex-row justify-content-center align-items-center row">
-                        <button class="btn btn-sm btn-outline-primary mx-1"
-                            onclick="handleAdminAction('admin','{{user_row.id}}')">
-                            {% if user_row.has_admin %}Revogar{% else %}Conceder{% endif %} Admin
-                        </button>
-                        <button class="btn btn-sm btn-primary mx-1"
-                            onclick="handleAdminAction('pagamento','{{user_row.id}}')">
-                            {% if user_row.pagou_aposta %}Pagou{% else %}Não Pagou{% endif %} Aposta
-                        </button>
+                    <div class="ml-3">
+                        <h5 class="mb-0 mt-0">{{user_row.nome_completo}}</h5>
+                        <span>{{user_row.email}}</span>
+                        <div class="p-3 m-2 bg-primary d-flex justify-content-between rounded text-white stats row">
+                            <div class="d-flex flex-column mx-1">
+                                <span class="detail-custom">Data de Início na TI</span>
+                                <span class="number-custom">{{user_row.data_inicioti}}</span>
+                            </div>
+                            <div class="d-flex flex-column mx-1">
+                                <span class="detail-custom">Acesso Admin</span>
+                                <span class="number-custom">{% if user_row.has_admin %}👍{% else %}❌{% endif %}</span>
+                            </div>
+                            <div class="d-flex flex-column mx-1">
+                                <span class="detail-custom">Pagou Aposta?</span>
+                                <span class="number-custom">{% if user_row.pagou_aposta %}👍{% else %}❌{% endif %}</span>
+                            </div>
+                        </div>
+                        <div class="button mt-2 d-flex flex-row justify-content-center align-items-center row">
+                            <button class="btn btn-sm btn-outline-primary mx-1"
+                                onclick="handleAdminAction('admin','{{user_row.id}}')">
+                                {% if user_row.has_admin %}Revogar{% else %}Conceder{% endif %} Admin
+                            </button>
+                            <button class="btn btn-sm btn-primary mx-1"
+                                onclick="handleAdminAction('pagamento','{{user_row.id}}')">
+                                {% if user_row.pagou_aposta %}Não Pagou{% else %}Pagou{% endif %} Aposta
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
-<h5 align="center">Apostas</h5>
-<div class="container mt-3 d-flex justify-content-center">
-    {% if apostas %}
-    <div class="row">
-        {% for aposta in apostas %}
-        <div class="card p-3 m-2">
-            <div class="d-flex align-items-center justify-content-between">
-                <div class="image">
-                    <img src="{{aposta.user.foto_perfil}}" class="rounded" width="25px" height="25px"
-                        style="object-fit: cover;">
-                </div>
-                <div class="ml-3">
-                    <h5 class="mb-0 mt-0">{{aposta.user.nome_completo}}</h5>
-                    <span>Data aposta:</span><br/>
-                    <span>{{aposta.data_confirmacao}}</span>
-                </div>
-                <div class="align-items-center">
-                    <button class="btn btn-sm btn-primary ml-2"
-                        onclick="handleAdminAction('excluir_aposta','{{aposta.id}}')">
-                        Excluir Aposta
-                    </button>
+    <h5 align="center">Apostas</h5>
+    <div class="container mt-3 d-flex justify-content-center">
+        {% if apostas %}
+        <div class="row">
+            {% for aposta in apostas %}
+            <div class="card p-3 m-2">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="image">
+                        <img src="{{aposta.user.foto_perfil}}" class="rounded" width="25px" height="25px"
+                            style="object-fit: cover;">
+                    </div>
+                    <div class="ml-3">
+                        <h5 class="mb-0 mt-0">{{aposta.user.nome_completo}}</h5>
+                        <span>Data aposta:</span><br/>
+                        <span>{{aposta.data_confirmacao}}</span>
+                    </div>
+                    <div class="align-items-center">
+                        <button class="btn btn-sm btn-primary ml-2"
+                            onclick="window.location.href = '/auditoria_aposta?id={{aposta.id}}';">
+                            Auditar Aposta
+                        </button>
+                        <button class="btn btn-sm btn-primary ml-2"
+                            onclick="handleAdminAction('excluir_aposta','{{aposta.id}}')">
+                            Excluir Aposta
+                        </button>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
+        {% else %}
+        <h4 align="center">Nada para ver aqui... Ainda... 👀</h4>
+        {% endif %}
     </div>
     {% else %}
-    <h4 align="center">Nada para ver aqui... Ainda... 👀</h4>
+    <br />
+    <br />
+    <h1 align="center">Você não tem acesso à esta página.</h1>
+    <h1 align="center">Contate o administrador.</h1>
+    <h2 align="center">Caso você for o administrador, aí eu já não sei o que posso aconselhar a fazer 🤨</h2>
+    <br />
+    <br />
+    <p align="center">Talvez deletar o banco de dados...</p>
     {% endif %}
 </div>
-{% else %}
-<br />
-<br />
-<h1 align="center">Você não tem acesso à esta página.</h1>
-<h1 align="center">Contate o administrador.</h1>
-<h2 align="center">Caso você for o administrador, aí eu já não sei o que posso aconselhar a fazer 🤨</h2>
-<br />
-<br />
-<p align="center">Talvez deletar o banco de dados...</p>
-{% endif %}
-
 {% endblock %}
 {% block javascript %}
 <script>

@@ -44,7 +44,7 @@ Minha Aposta
     }
 </style>
 <div class="container mt-4 aposta-container">
-    <h1 class="text-center">Aposta</h1>
+    <h1 class="text-center">Minha Aposta</h1>
     <div class="row justify-content-center">
         <div class="col-lg-8">
             {% if not has_aposta %}
@@ -72,7 +72,7 @@ Minha Aposta
                     {% endfor %}
                 </ol>
             {% else %}
-                <h2 class="text-center">Data de aposta: {{ current_aposta.data_confirmacao }}</h2>
+                <h2 class="text-center">Data da aposta: {{ current_aposta.data_confirmacao }}</h2>
                 <ol id="aposta_feita" class="list-group mt-4">
                     {% for time in formatted_aposta %}
                         <li class="list-group-item list-group-item-action d-flex" draggable="false">

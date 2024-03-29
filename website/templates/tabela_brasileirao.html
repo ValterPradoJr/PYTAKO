@@ -8,6 +8,18 @@
         background-image: url('/static/imagens/maraca.jpeg'); /* Imagem de fundo */
         background-size: cover; /* Cobrir toda a área do elemento pai */
         background-position: center; /* Centralizar a imagem */
+        background-attachment: fixed;
+        background-repeat: no-repeat; /* Impede a repetição da imagem */
+    }
+    .tabela-brasileirao {
+        background-color: rgba(255, 255, 255, 0.8); /* Adiciona um fundo branco transparente ao formulário */
+        border-radius: 10px;
+        padding: auto;
+        margin-top: 50px; /* Ajusta o espaçamento superior */
+        max-width: auto; /* Define a largura máxima do contêiner */
+        margin-left: auto; /* Centraliza horizontalmente */
+        margin-right: auto; /* Centraliza horizontalmente */
+        text-align: center; /* Centraliza o conteúdo */
     }
     .table {
         background-color: #ffffff; /* Plano de fundo da tabela */
@@ -36,7 +48,6 @@
     .legendas-tabela {
         background-color: rgba(255, 255, 255); /* Adiciona um fundo branco transparente ao formulário */
         border-radius: 10px;
-        border: 1px solid black;
     }
     .libertadores { color: green; }
     .pre-libertadores { color: purple; }
@@ -44,8 +55,8 @@
     .rebaixados { color: red; }
     </style>
 
-<div class="container mt-5">
-    <!--<h1 class="text-center">Resultado Atual</h1>-->
+<div class="container mt-5 tabela-brasileirao">
+    <h1 class="text-center">Tabela Brasileirão Série A</h1>
     <div class="legendas-tabela m-1">
         <div class="legendas">
             <div class="libertadores">Libertadores</div>
