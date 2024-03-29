@@ -1,21 +1,121 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-%}
+{% extends "base.html" %} 
+{% block title %}Home{% endblock %} 
+{% block content %}
+<style>
+  body {
+      background-image: url('/static/imagens/maraca.jpeg'); /* Imagem de fundo */
+      background-size: cover; /* Cobrir toda a área do elemento pai */
+      background-position: center; /* Centralizar a imagem */
+  }
+  .table {
+      background-color: #ffffff; /* Plano de fundo da tabela */
+      border-radius: 5px; /* Cantos arredondados da tabela */
+      overflow: hidden; /* Para evitar que a borda redonda se estenda além da tabela */
+  }
+  .table th,
+  .table td {
+      border-radius: 5; /* Remover cantos arredondados dos elementos da tabela */
+  }
+  .table-responsive-md {
+    padding: 10px;
+  }
+  .legendas {
+      display: flex;
+      justify-content: space-around;
+      font-weight: bold; /* Negrito */
+  }
+  .legendas2 {
+      display: flex;
+      justify-content: space-around;
+      color:#000000;
+      font-weight: bold; /* Negrito */
+  }
+  .legendas div {
+      padding: 10px;
+      border-radius: 8px;
+  }
+  .legendas-tabela {
+      background-color: rgba(255, 255, 255); /* Adiciona um fundo branco transparente ao formulário */
+      border-radius: 5px;
+      border: 1px solid black;
+  }
+  .libertadores { color: green; }
+  .pre-libertadores { color: purple; }
+  .sul-americana { color: orange; }
+  .rebaixados { color: red; }
+  </style>
 <h1 align="center">PYTAKO</h1>
-<!-- <ul class="list-group list-group-flush" id="notes">
-  {% for note in user.notes %}
-  <li class="list-group-item">
-    {{ note.data }}
-    <button type="button" class="close" onClick="deleteNote('{{ note.id }}')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </li>
-  {% endfor %}
-</ul>
-<form method="POST">
-  <textarea name="note" id="note" class="form-control"></textarea>
-  <br />
-  <div align="center">
-    <button type="submit" class="btn btn-primary">Add Note</button>
+<!--Resultado bolão inicio-->
+<h1 class="text-center">Classificação bolão</h1>
+<table class="table table-responsive-md">
+    <tr>
+        <th>Posição</th>
+        <th>Nome</th>
+        <th>Pontuação</th>
+        <th>Data da aposta</th>
+    </tr>
+    {% for resultado in resultados %}
+    <tr>
+        <td>{{loop.index}}</td>
+        <td><img src="{{resultado.user.foto_perfil}}" class="rounded-circle mx-1 my-auto" width="25" height="25" style="object-fit: cover; min-width: 25px; min-height: 25px;"/>
+        {{resultado.user.nome_completo}}</td>
+        <td>{{resultado.pontuacao}}</td>
+        <td>{{resultado.data_confirmacao}}</td>
+    </tr>
+    {% endfor %}
+</table>
+<!--Resultado bolão fim
+-------------------------->
+<!--Tabela brasileirão inicio-->
+<div class="container mt-5">
+  <h1 class="text-center">Tabela Brasileirão série A</h1>
+  <div class="legendas-tabela m-1">
+      <div class="legendas">
+          <div class="libertadores">Libertadores</div>
+          <div class="pre-libertadores">Pré-libertadores</div>
+          <div class="sul-americana">Copa Sul-Americana</div>
+          <div class="rebaixados">Rebaixados</div>
+      </div>
+      <div class="legendas2"> 
+          <a>
+          P: Pontos |
+          J: Jogos |
+          V: Vitórias |
+          E: Empates |
+          D: Derrotas |
+          GP: Gols Pró |
+          GC: Gols Contra |
+          SG: Saldo de Gols |
+          %: Aproveitamento</a>
+      </div>
   </div>
-</form> -->
+  <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+          <thead class="thead-dark">
+              <tr>
+                  {% for th in theaders %}
+                      <th scope="col">{{th}}</th>
+                  {% endfor %}
+              </tr>
+          </thead>
+          <tbody>
+              {% for row in tdata %}
+                  <tr>
+                      {% for td in row %}
+                          {% if loop.index == 2 %}
+                              <td><img src="{{td}}" width="25" height="25" style="object-fit: cover;" alt="Brasão do Time"></td>
+                          {% else %}
+                              <td>{{td}}</td>
+                          {% endif %}
+                      {% endfor %}
+                  </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+  </div>
+</div>
+<!--Tabela brasileirão fim-->
+{% endblock %}
+{% block javascript %}
+
 {% endblock %}
