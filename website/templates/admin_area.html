@@ -58,10 +58,10 @@
                         <h5 class="mb-0 mt-0">{{user_row.nome_completo}}</h5>
                         <span>{{user_row.email}}</span>
                         <div class="p-3 m-2 bg-primary d-flex justify-content-between rounded text-white stats row">
-                            <div class="d-flex flex-column mx-1">
+                            <!-- <div class="d-flex flex-column mx-1">
                                 <span class="detail-custom">Data de Início na TI</span>
                                 <span class="number-custom">{{user_row.data_inicioti}}</span>
-                            </div>
+                            </div> -->
                             <div class="d-flex flex-column mx-1">
                                 <span class="detail-custom">Acesso Admin</span>
                                 <span class="number-custom">{% if user_row.has_admin %}👍{% else %}❌{% endif %}</span>
@@ -104,10 +104,6 @@
                         <span>{{aposta.data_confirmacao}}</span>
                     </div>
                     <div class="align-items-center">
-                        <button class="btn btn-sm btn-primary ml-2"
-                            onclick="window.location.href = '/auditoria_aposta?id={{aposta.id}}';">
-                            Auditar Aposta
-                        </button>
                         <button class="btn btn-sm btn-primary ml-2"
                             onclick="handleAdminAction('excluir_aposta','{{aposta.id}}')">
                             Excluir Aposta

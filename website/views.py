@@ -136,7 +136,7 @@ def perfil():
         user = User.query.filter_by(id=current_user.id).first()
         user.email = request.form.get('email')
         user.nome_completo = request.form.get('nome_completo')
-        user.data_inicioti = datetime.strptime(request.form.get('data_inicioti'), '%Y-%m-%d').date()
+        # user.data_inicioti = datetime.strptime(request.form.get('data_inicioti'), '%Y-%m-%d').date()
         
         foto_perfil = request.files['foto_perfil']
         
