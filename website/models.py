@@ -23,8 +23,8 @@ class User(db.Model, UserMixin):
     nome_completo = db.Column(db.String(150))
     pagou_aposta = db.Column(db.Boolean)
     has_admin = db.Column(db.Boolean)
-    data_inicioti = db.Column(db.Date)
     foto_perfil = db.Column(db.String(200))
+    cod_confirmacao = db.Column(db.String(20))
     notes = db.relationship('Note')
 
 class Time(db.Model):

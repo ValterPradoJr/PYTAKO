@@ -81,7 +81,7 @@
                 <td>{{loop.index}}</td>
                 <td><img src="{{resultado.user.foto_perfil}}" class="rounded-circle mx-1 my-auto foto-perfil" width="25" height="25" style="object-fit: cover; min-width: 25px; min-height: 25px;"/>
                 {{resultado.user.nome_completo}}</td>
-                <td>{{resultado.pontuacao}}</td>
+                <td>{{resultado.pontuacao}}<a class="text-muted" href="/auditoria_aposta?id={{resultado.id_aposta}}" title="Auditar Esta Aposta"><i class="ml-2 fa fa-external-link"></i></a></td>
                 <td>{{resultado.data_confirmacao}}</td>
             </tr>
             {% endfor %}
