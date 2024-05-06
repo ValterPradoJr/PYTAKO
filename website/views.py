@@ -2,13 +2,17 @@ from flask import Blueprint, render_template, request, flash, jsonify, redirect,
 from flask_login import login_required, current_user
 from .models import Note, Time, Aposta, User
 from datetime import datetime, date
+#from zoneinfo import ZoneInfo
 from . import db
 from .utils import *
 from bs4 import BeautifulSoup
 import requests
 import json
 import os
+import pytz
+from sqlalchemy.orm.attributes import flag_modified
 
+fuso_horario = pytz.timezone('America/Sao_Paulo')
 
 views = Blueprint('views', __name__)
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif'}
@@ -108,10 +112,10 @@ def minha_aposta():
     current_aposta = Aposta.query.filter_by(user_id=current_user.id).first()
     formatted_aposta = []
     has_aposta = False
-    data_limite = datetime(2024, 4, 13) #deve ser a data limite + 1 dia para o cálculo pois começa a valer em 00:00:00
+    data_limite = datetime(2024, 4, 14, tzinfo=fuso_horario) #deve ser a data limite + 1 dia para o cálculo pois começa a valer em 00:00:00
     # Bloqueio do botão de cadastrar apostas
-    prazo_limite = datetime.now() > data_limite
-    dias_restantes = data_limite - datetime.now()
+    prazo_limite = datetime.now(fuso_horario) > data_limite
+    dias_restantes = data_limite - datetime.now(fuso_horario)
     print('Prazo limite passou:',prazo_limite)
     if current_aposta:
         has_aposta = True
@@ -215,19 +219,24 @@ def auditoria_aposta():
 @views.route('/apostas_outros', methods=['GET','POST'])
 @login_required
 def apostas_outros():
-    data_times = Time.query.all()
-    users = User.query.all()
+    data_times = Time.query.all()  
+    users = User.query.all()       
     formatted_users = []
-    user_aposta = Aposta.query.filter_by(user_id=current_user.id).first()
+    user_aposta = Aposta.query.filter_by(user_id=current_user.id).first()  
+
     for user in users:
         current_aposta = Aposta.query.filter_by(user_id=user.id).first()
         if current_aposta:
             formatted_aposta = []
             for row_aposta in json.loads(current_aposta.aposta_json):
-            #print(next(item for item in data_times if item.nome == row_aposta['nome']).img_url)
-                row_aposta['img_url'] = next(item for item in data_times if item.nome == row_aposta['nome']).img_url
-                formatted_aposta.append(row_aposta)
-            formatted_user = { 'user_data': user, 'aposta': current_aposta, 'formatted_aposta': formatted_aposta}
+                if 'nome' in row_aposta:
+                    nome = row_aposta['nome']
+                    for item in data_times:
+                        if item.nome == nome:
+                            row_aposta['img_url'] = item.img_url
+                            formatted_aposta.append(row_aposta)
+                            break
+            formatted_user = {'user_data': user, 'aposta': current_aposta, 'formatted_aposta': formatted_aposta}
             formatted_users.append(formatted_user)
 
     return render_template('apostas_outros.html', user=current_user, users=formatted_users, user_aposta=user_aposta)
@@ -269,7 +278,7 @@ def salvar_aposta():
     db.session.commit()
 
     flash('Aposta salva com sucesso!', 'success')
-    return True
+    return jsonify({'success': True})
 
 @views.route('/delete-note', methods=['POST'])
 def delete_note():  
