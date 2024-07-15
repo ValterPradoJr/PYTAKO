@@ -133,7 +133,7 @@ Minha Aposta
             {% else %}
                 <h2 class="text-center">Data da aposta: {{ current_aposta.data_confirmacao }}</h2>
                 <ol id="aposta_feita" class="list-group mt-4">
-                  {% for time in times %}
+                  {% for time in formatted_aposta %}
                   <li class="list-group-item list-group-item-action d-flex" draggable="true">
                     <div class="item-content d-flex align-items-center">
                       <span class="list-item-number d-flex"></span>
