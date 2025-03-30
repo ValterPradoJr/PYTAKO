@@ -1,19 +1,21 @@
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+import pytz
 
+fuso_horario = pytz.timezone('America/Sao_Paulo')
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.String(10000))
-    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    date = db.Column(db.DateTime(timezone=True), default=func.now(fuso_horario))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class Aposta(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     aposta_json = db.Column(db.String(10000))
-    data_confirmacao = db.Column(db.DateTime(timezone=True), default=func.now())
+    data_confirmacao = db.Column(db.DateTime(timezone=True), default=func.now(pytz.timezone('America/Sao_Paulo')))
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
