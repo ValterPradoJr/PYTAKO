@@ -4,44 +4,101 @@ Minha Aposta
 {% endblock %}
 {% block content %}
 <style>
-    body {
-        background-image: url('/static/imagens/maraca.jpeg'); /* Imagem de fundo */
-        background-size: cover; 
-        background-position: center;
-        background-attachment: fixed;
-        background-repeat: no-repeat; /* Impede a repetição da imagem */
-    }
-    .aposta-container {
-        background-color: rgba(255, 255, 255, 0.8); /* Adiciona um fundo branco transparente ao formulário */
-        border-radius: 10px;
-        padding: auto;
-        margin-top: 50px; /* Ajusta o espaçamento superior */
-        max-width: auto; /* Define a largura máxima do contêiner */
-        margin-left: auto; /* Centraliza horizontalmente */
-        margin-right: auto; /* Centraliza horizontalmente */
-        text-align: center; /* Centraliza o conteúdo */
-    }
-    .aposta-container button {
-        padding: 10px 20px; /* Adiciona preenchimento ao botão */
-        background-color: #006300; /* Cor de fundo do botão */
-        color: #fff; /* Cor do texto do botão */
-        border: none; /* Remove a borda */
-        border-radius: 5px; /* Adiciona bordas arredondadas */
-        cursor: pointer; /* Muda o cursor ao passar por cima */
-        transition: background-color 0.3s ease; /* Adiciona transição suave para a mudança de cor de fundo */
-        font-weight: bold;
-    }
-    .aposta-container button:hover {
-        background-color: #034b03; /* Altera a cor de fundo quando o cursor está sobre o botão */
-    }
-    .button-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-    }
-    .button-container button {
-        margin: 0 10px; /* Adiciona espaçamento horizontal entre os botões */
-    }
+  body {
+      background-image: url('/static/imagens/maraca.jpeg');
+      background-size: cover; 
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+  }
+  .aposta-container {
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      padding: auto;
+      margin-top: 50px;
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+  }
+  .aposta-container button {
+      padding: 10px 20px;
+      background-color: #006300;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-weight: bold;
+  }
+  .aposta-container button:hover {
+      background-color: #034b03;
+  }
+  .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+  }
+  .button-container button {
+      margin: 0 10px;
+  }
+  .list-group-item {
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+  }
+  .list-group-item img {
+      margin-right: 10px;
+  }
+
+  .list-group-item {
+    padding: 7px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.item-content {
+    display: flex;
+    align-items: center;
+    flex-grow: 1; /* Para que a div ocupe todo o espaço disponível */
+}
+
+.list-item-number {
+    margin-right: 10px; /* Adiciona espaçamento entre o número do item e a imagem */
+}
+
+/* Estilos para dispositivos móveis */
+  @media (max-width: 768px) {
+      .aposta-container {
+          max-width: 100%; /* Define a largura máxima para 100% em dispositivos móveis */
+          margin-top: 20px; /* Reduz a margem superior */
+      }
+      .button-container {
+          flex-direction: column; /* Alinha os botões verticalmente em dispositivos móveis */
+          margin-top: 10px; /* Reduz o espaçamento entre os botões */
+      }
+      .button-container button {
+          margin: 5px 0; /* Adiciona espaçamento vertical entre os botões */
+      }
+      .list-group-item {
+          flex-direction: column; /* Alinha os itens da lista verticalmente em dispositivos móveis */
+          align-items: flex-start; /* Alinha os itens à esquerda em dispositivos móveis */
+          padding: 5px;
+          margin-bottom: 3px;
+      }
+      .list-group-item img {
+          margin-right: 0; /* Remove a margem à direita das imagens em dispositivos móveis */
+          margin-bottom: 5px; /* Adiciona espaçamento inferior entre as imagens e o texto */
+      }
+  }
 </style>
 <div class="container mt-4 aposta-container">
     <h1 class="text-center">Minha Aposta</h1>
@@ -65,22 +122,26 @@ Minha Aposta
                 <ol id="todoList" class="list-group mt-4">
                     {% for time in times %}
                         <li class="list-group-item list-group-item-action d-flex" draggable="true">
+                          <div class="item-content d-flex align-items-center">
                             <span class="list-item-number d-flex"></span>
                             <img src="{{ time.img_url }}" class="rounded mx-2" width="25" height="25" draggable="false"/>
-                            {{ time.nome }}
+                            <span class="team-name">{{ time.nome }}</span>
+                          </div>  
                         </li>
                     {% endfor %}
                 </ol>
             {% else %}
                 <h2 class="text-center">Data da aposta: {{ current_aposta.data_confirmacao }}</h2>
                 <ol id="aposta_feita" class="list-group mt-4">
-                    {% for time in formatted_aposta %}
-                        <li class="list-group-item list-group-item-action d-flex" draggable="false">
-                            <span class="list-item-number d-flex"></span>
-                            <img src="{{ time.img_url }}" class="rounded mx-2" width="25" height="25"/>
-                            {{ time.nome }}
-                        </li>
-                    {% endfor %}
+                  {% for time in formatted_aposta %}
+                  <li class="list-group-item list-group-item-action d-flex" draggable="true">
+                    <div class="item-content d-flex align-items-center">
+                      <span class="list-item-number d-flex"></span>
+                      <img src="{{ time.img_url }}" class="rounded mx-2" width="25" height="25" draggable="false"/>
+                      <span class="team-name">{{ time.nome }}</span>
+                    </div>  
+                  </li>
+              {% endfor %}
                 </ol>
             {% endif %}
         </div>
@@ -186,36 +247,35 @@ Minha Aposta
     let touchY;
 
     todoList.addEventListener('touchstart', function(event) {
-      draggedItem = event.target;
-      touchY = event.touches[0].clientY// - draggedItem.getBoundingClientRect().top;
-      event.target.style.opacity = '0.5';
-      event.target.style.zIndex = '1000'; // Set z-index to make it appear above other items
+        draggedItem = event.target.closest('.list-group-item');
+        touchY = event.touches[0].clientY;
+        event.target.style.opacity = '0.5';
+        event.target.style.zIndex = '1000';
     });
 
     todoList.addEventListener('touchmove', function(event) {
-      event.preventDefault();
-      if (draggedItem) {
-        const newPosition = event.touches[0].clientY // - touchY;//- todoList.getBoundingClientRect().top
-        //draggedItem.style.top = newPosition + 'px';
-
-        const afterElement = getDragAfterElement(todoList, newPosition);
-        if (afterElement == null) {
-            todoList.appendChild(draggedItem);
-        } else {
-            todoList.insertBefore(draggedItem, afterElement);
+        event.preventDefault();
+        if (draggedItem) {
+            const newPosition = event.touches[0].clientY
+            const afterElement = getDragAfterElement(todoList, newPosition);
+            if (afterElement == null) {
+                todoList.appendChild(draggedItem);
+            } else {
+                todoList.insertBefore(draggedItem, afterElement);
+            }
         }
-      }
     });
 
     todoList.addEventListener('touchend', function(event) {
-      event.target.style.opacity = '1';
-      if (draggedItem) {
-        draggedItem.style.top = '';
-        draggedItem.style.zIndex = ''; // Reset z-index
-        draggedItem = null;
-      }
-      updateItemNumbers();
+        if (draggedItem) {
+            draggedItem.style.opacity = '1';
+            draggedItem.style.top = '';
+            draggedItem.style.zIndex = '';
+            draggedItem = null;
+        }
+        updateItemNumbers();
     });
+
 
     function getDragAfterElement(container, y) {
       const draggableElements = [...container.querySelectorAll('.list-group-item:not(.dragging)')];
